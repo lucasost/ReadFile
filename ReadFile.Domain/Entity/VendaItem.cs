@@ -1,4 +1,4 @@
-﻿namespace ReadFile.Domain.Repository
+﻿namespace ReadFile.Domain.Entity
 {
     public class VendaItem
     {

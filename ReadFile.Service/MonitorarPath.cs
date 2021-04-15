@@ -8,36 +8,29 @@ namespace ReadFile.Service
 {
     public class MonitorarPath : IMonitorarPath
     {
-        private readonly IInterpretarArquivo _interpretarArquivo;
-
-        public MonitorarPath(IInterpretarArquivo interpretarArquivo)
+        private readonly ILerArquivoRepository _lerArquivo;
+        private readonly IEscreverArquivoRepository _escreverArquivo;
+        private string _caminhoSaida;
+        public MonitorarPath(ILerArquivoRepository lerArquivo, IEscreverArquivoRepository escreverArquivo, string caminhoSaida)
         {
-            _interpretarArquivo = interpretarArquivo;
-        }
-
-        public void Monitorar(string path)
-        {
-            using var watcher = new FileSystemWatcher(path);
-
-            watcher.NotifyFilter = NotifyFilters.Attributes
-                              | NotifyFilters.CreationTime
-                              | NotifyFilters.DirectoryName
-                              | NotifyFilters.FileName;
-            watcher.Created += OnCreated;
-            watcher.Filter = "*.txt";
-            watcher.EnableRaisingEvents = true;
+            _lerArquivo = lerArquivo;
+            _escreverArquivo = escreverArquivo;
+            _caminhoSaida = caminhoSaida;
         }
 
         public void OnCreated(object sender, FileSystemEventArgs file)
         {
-            if (file.ChangeType != WatcherChangeTypes.Changed)
+            if (file.ChangeType != WatcherChangeTypes.Created)
             {
                 return;
             }
 
             Console.WriteLine($"Arquivo adicionado: {file.FullPath}");
             Console.WriteLine("Iniciado a leitura/interpretação.");
-            _interpretarArquivo.LerArquivo(file.FullPath, file.Name);
+            var dadosDoArquivo = _lerArquivo.InterpretarArquivo(file.FullPath, file.Name);
+            Console.WriteLine("Iniciado a escrita dos dados.");
+            _escreverArquivo.EscreverArquivo(dadosDoArquivo, _caminhoSaida);
+            Console.WriteLine($"Escrita finalizada, é possível acessar o arquivo em {_caminhoSaida}");
         }
     }
 }

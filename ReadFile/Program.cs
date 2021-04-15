@@ -1,7 +1,7 @@
 ﻿using FileHelpers;
 using ReadFile.Domain.Interfaces;
+using ReadFile.Domain.ViewModel;
 using ReadFile.Service;
-using ReadFile.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,20 +16,35 @@ namespace ReadFile
         {
             Console.WriteLine("Gerenciado de leitura de arquivos e interpretador de vendas.");
 
-            IGerenciarArquivo gerenciarArquivo = new GerenciarArquivo();
-
             string caminhoHomePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var diretorioCompletoOut = caminhoHomePath + "\\data\\out\\";
             var diretorioCompletoIn = caminhoHomePath + "\\data\\in\\";
 
-            gerenciarArquivo.CriarCaminho(diretorioCompletoOut);
-            gerenciarArquivo.CriarCaminho(diretorioCompletoIn);
+            IGerenciarArquivo gerenciarArquivo = new GerenciarArquivo();
+            ILerArquivoRepository lerArquivo = new LerArquivo();
+            IEscreverArquivoRepository escrecerArquivo = new EscreverArquivo();
+            IMonitorarPath monitorarPath = new MonitorarPath(lerArquivo, escrecerArquivo, diretorioCompletoOut);
 
-            Console.WriteLine("\n \n \n");
+
+            gerenciarArquivo.CriarCaminho(diretorioCompletoIn);
+            gerenciarArquivo.CriarCaminho(diretorioCompletoOut);
+
+            Console.WriteLine("\n \n");
             Console.WriteLine("Monitorando para ler arquivos.");
 
-            //Monitorar pasta
+            using var monitorar = new FileSystemWatcher(diretorioCompletoIn);
 
+            monitorar.NotifyFilter = NotifyFilters.Attributes
+                              | NotifyFilters.CreationTime
+                              | NotifyFilters.DirectoryName
+                              | NotifyFilters.FileName;
+            monitorar.Created += monitorarPath.OnCreated;
+            monitorar.Filter = "*.txt";
+            monitorar.EnableRaisingEvents = true;
+
+
+
+            Console.ReadLine();
         }
     }
 }

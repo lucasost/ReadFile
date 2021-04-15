@@ -1,6 +1,6 @@
 ﻿using FileHelpers;
 using ReadFile.Domain.Interfaces;
-using ReadFile.Domain.Repository;
+using ReadFile.Domain.Entity;
 using ReadFile.Domain.Uteis;
 using ReadFile.Domain.ViewModel;
 using System;
@@ -9,11 +9,11 @@ using System.Text;
 
 namespace ReadFile.Service
 {
-    public class InterpretarArquivo : IInterpretarArquivo
+    public class LerArquivo : ILerArquivoRepository
     {
-        public void LerArquivo(string caminhoArquivo, string nomeDoArquivo)
+        public DadosRetornoArquivoModel InterpretarArquivo(string caminhoArquivo, string nomeDoArquivo)
         {
-            var engine = new MultiRecordEngine(typeof(VendedorDesempenhoViewModel), typeof(ClienteViewModel), typeof(VendaViewModel));
+            var engine = new MultiRecordEngine(typeof(VendedorViewModel), typeof(ClienteViewModel), typeof(VendaViewModel));
 
             engine.RecordSelector = new RecordTypeSelector(CustomSelector);
 
@@ -26,13 +26,18 @@ namespace ReadFile.Service
 
             foreach (var objeto in objetos)
             {
-                if (objeto is Vendedor)
+                if (objeto is VendedorViewModel)
                 {
-                    vendedores.Add((Vendedor)objeto);
+                    var objetoTipado = (VendedorViewModel)objeto;
+
+                    var vendedor = new Vendedor(objetoTipado.Type, objetoTipado.Cpf, objetoTipado.Name, objetoTipado.Salary);
+                    vendedores.Add(vendedor);
                 }
                 else if (objeto is ClienteViewModel)
                 {
-                    clientes.Add((Cliente)objeto);
+                    var objetoTipado = (ClienteViewModel)objeto;
+                    var cliente = new Cliente(objetoTipado.Type, objetoTipado.Cnpj, objetoTipado.Name, objetoTipado.BusinessArea);
+                    clientes.Add(cliente);
                 }
                 if (objeto is VendaViewModel)
                 {
@@ -48,6 +53,15 @@ namespace ReadFile.Service
                     vendas.Add(venda);
                 }
             }
+
+            return new DadosRetornoArquivoModel
+            {
+                Vendas = vendas,
+                CaminhoSaida = caminhoArquivo,
+                Clientes = clientes,
+                Vendedores = vendedores,
+                NomeArquivoSaida = nomeDoArquivo
+            };
         }
 
         private static void InserirItensDaVenda(VendaViewModel vendaTipada, Venda venda)

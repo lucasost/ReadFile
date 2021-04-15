@@ -16,7 +16,7 @@ namespace ReadFile.Service
 
         public void RegistrarInfo(string mensagem)
         {
-            _registro.RegistrarInfo($"{mensagem}:{DateTime.Now}");
+            _registro.RegistrarInfo($"{mensagem}");
         }
     }
 }
