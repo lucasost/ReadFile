@@ -1,17 +1,12 @@
-﻿using FileHelpers;
-using ReadFile.Domain.Interfaces;
-using ReadFile.Domain.ViewModel;
+﻿using ReadFile.Domain.Interfaces;
 using ReadFile.Service;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace ReadFile
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.WriteLine("Gerenciado de leitura de arquivos e interpretador de vendas.");
@@ -41,8 +36,6 @@ namespace ReadFile
             monitorar.Created += monitorarPath.OnCreated;
             monitorar.Filter = "*.txt";
             monitorar.EnableRaisingEvents = true;
-
-
 
             Console.ReadLine();
         }

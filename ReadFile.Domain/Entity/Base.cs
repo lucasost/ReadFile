@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReadFile.Domain.Entity
+﻿namespace ReadFile.Domain.Entity
 {
     public class Base
     {

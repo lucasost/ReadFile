@@ -1,7 +1,4 @@
 ﻿using FileHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ReadFile.Domain.ViewModel
 {

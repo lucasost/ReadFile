@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ReadFile.Domain.Uteis
+﻿namespace ReadFile.Domain.Uteis
 {
     public static class Constantes
     {

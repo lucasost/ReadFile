@@ -1,5 +1,4 @@
-﻿using System;
-namespace ReadFile.Domain.Interfaces
+﻿namespace ReadFile.Domain.Interfaces
 {
     public interface IGerenciarArquivo
     {

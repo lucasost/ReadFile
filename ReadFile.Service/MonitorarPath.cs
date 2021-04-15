@@ -1,8 +1,6 @@
 ﻿using ReadFile.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace ReadFile.Service
 {
@@ -30,7 +28,9 @@ namespace ReadFile.Service
             var dadosDoArquivo = _lerArquivo.InterpretarArquivo(file.FullPath, file.Name);
             Console.WriteLine("Iniciado a escrita dos dados.");
             _escreverArquivo.EscreverArquivo(dadosDoArquivo, _caminhoSaida);
-            Console.WriteLine($"Escrita finalizada, é possível acessar o arquivo em {_caminhoSaida}");
+            Console.WriteLine($"Escrita finalizada, é possível acessar o arquivo em {_caminhoSaida + file.Name}");
+            Console.WriteLine("\n\n\n");
+            Console.WriteLine($"Esperando novo arquivo...");
         }
     }
 }

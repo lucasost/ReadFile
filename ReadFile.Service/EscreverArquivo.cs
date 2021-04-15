@@ -1,6 +1,5 @@
 ﻿using ReadFile.Domain.Interfaces;
 using ReadFile.Domain.ViewModel;
-using System.IO;
 using System.Linq;
 
 namespace ReadFile.Service
@@ -22,7 +21,7 @@ namespace ReadFile.Service
             }).OrderByDescending(a => a.ValorVenda).FirstOrDefault();
 
             registrarOcorrenciasArquivo.RegistrarInfo($"Melhor venda: {melhorVenda.SaleId} no valor de R$ {melhorVenda.ValorVenda}");
-           
+
             var piorvendedor = dadosDoArquivo.Vendas.GroupBy(a => a.Salesman).Select(g => new VendedorDesempenhoViewModel
             {
                 Vendedor = g.Key,
