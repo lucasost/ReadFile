@@ -1,12 +1,9 @@
 ﻿using FileHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ReadFile.Model
+namespace ReadFile.Domain.ViewModel
 {
     [DelimitedRecord("ç")]
-    public class Cliente
+    public class ClienteViewModel
     {
         public string Type { get; set; }
         public string Cnpj { get; set; }

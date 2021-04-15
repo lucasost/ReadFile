@@ -1,12 +1,9 @@
 ﻿using FileHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ReadFile.Model
+namespace ReadFile.Domain.ViewModel
 {
     [DelimitedRecord("ç")]
-    public class Vendedor
+    public class VendedorViewModel
     {
         public string Type { get; set; }
         public string Cpf { get; set; }

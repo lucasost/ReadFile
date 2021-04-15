@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReadFile.ViewModel
+namespace ReadFile.Domain.ViewModel
 {
     public class MelhorVendaViewModel
     {

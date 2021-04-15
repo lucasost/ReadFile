@@ -9,4 +9,9 @@
     <PackageReference Include="FileHelpers" Version="3.4.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReadFile.Domain\ReadFile.Domain.csproj" />
+    <ProjectReference Include="..\ReadFile.Service\ReadFile.Service.csproj" />
+  </ItemGroup>
+
 </Project>
