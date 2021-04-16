@@ -1,4 +1,7 @@
-﻿using ReadFile.Domain.Interfaces;
+﻿using FileHelpers;
+using ReadFile.Domain.Interfaces;
+using ReadFile.Domain.Uteis;
+using ReadFile.Domain.ViewModel;
 using ReadFile.Service;
 using System;
 using System.IO;
@@ -17,9 +20,9 @@ namespace ReadFile
 
             IGerenciarArquivo gerenciarArquivo = new GerenciarArquivo();
             ILerArquivoRepository lerArquivo = new LerArquivo();
-            IEscreverArquivoRepository escrecerArquivo = new EscreverArquivo();
+            IRegistro registro = new RegistrarNoArquivo();
+            IEscreverArquivoRepository escrecerArquivo = new EscreverArquivo(registro);
             IMonitorarPath monitorarPath = new MonitorarPath(lerArquivo, escrecerArquivo, diretorioCompletoOut);
-
 
             gerenciarArquivo.CriarCaminho(diretorioCompletoIn);
             gerenciarArquivo.CriarCaminho(diretorioCompletoOut);
@@ -38,6 +41,21 @@ namespace ReadFile
             monitorar.EnableRaisingEvents = true;
 
             Console.ReadLine();
+        }
+
+        private static Type CustomSelector(MultiRecordEngine engine, string recordString)
+        {
+            if (recordString.Length == 0)
+                return null;
+
+            if (recordString.StartsWith(Constantes.TypeVendedor))
+                return typeof(VendedorViewModel);
+            else if (recordString.StartsWith(Constantes.TypeCliente))
+                return typeof(ClienteViewModel);
+            else if (recordString.StartsWith(Constantes.TypeVenda))
+                return typeof(VendaViewModel);
+            else
+                return null;
         }
     }
 }

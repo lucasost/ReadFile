@@ -25,9 +25,9 @@ namespace ReadFile.Service
 
             Console.WriteLine($"Arquivo adicionado: {file.FullPath}");
             Console.WriteLine("Iniciado a leitura/interpretação.");
-            var dadosDoArquivo = _lerArquivo.InterpretarArquivo(file.FullPath, file.Name);
+            var dadosDoArquivo = _lerArquivo.InterpretarArquivo(file.FullPath);
             Console.WriteLine("Iniciado a escrita dos dados.");
-            _escreverArquivo.EscreverArquivo(dadosDoArquivo, _caminhoSaida);
+            _escreverArquivo.EscreverArquivo(dadosDoArquivo, _caminhoSaida, file.Name);
             Console.WriteLine($"Escrita finalizada, é possível acessar o arquivo em {_caminhoSaida + file.Name}");
             Console.WriteLine("\n\n\n");
             Console.WriteLine($"Esperando novo arquivo...");

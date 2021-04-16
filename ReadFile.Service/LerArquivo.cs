@@ -1,17 +1,17 @@
 ﻿using FileHelpers;
-using ReadFile.Domain.Interfaces;
 using ReadFile.Domain.Entity;
+using ReadFile.Domain.Interfaces;
 using ReadFile.Domain.Uteis;
 using ReadFile.Domain.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 
 namespace ReadFile.Service
 {
     public class LerArquivo : ILerArquivoRepository
     {
-        public DadosRetornoArquivoModel InterpretarArquivo(string caminhoArquivo, string nomeDoArquivo)
+        public DadosRetornoArquivoModel InterpretarArquivo(string caminhoArquivo)
         {
             var engine = new MultiRecordEngine(typeof(VendedorViewModel), typeof(ClienteViewModel), typeof(VendaViewModel));
 
@@ -19,10 +19,9 @@ namespace ReadFile.Service
 
             var objetos = engine.ReadFile(caminhoArquivo);
 
-            var vendedores = new List<Vendedor> { };
-            var clientes = new List<Cliente> { };
-            var vendas = new List<Venda> { };
-            var itens = new List<VendaItem> { };
+            var vendedores = new List<Vendedor>();
+            var clientes = new List<Cliente>();
+            var vendas = new List<Venda>();
 
             foreach (var objeto in objetos)
             {
@@ -42,13 +41,7 @@ namespace ReadFile.Service
                 if (objeto is VendaViewModel)
                 {
                     var vendaTipada = (VendaViewModel)objeto;
-                    var venda = new Venda()
-                    {
-                        SaleId = vendaTipada.SaleId,
-                        Salesman = vendaTipada.Salesman,
-                        Type = vendaTipada.Type,
-                        Itens = new List<VendaItem> { }
-                    };
+                    var venda = new Venda(vendaTipada.Type, vendaTipada.SaleId, vendaTipada.Salesman);
                     InserirItensDaVenda(vendaTipada, venda);
                     vendas.Add(venda);
                 }
@@ -57,23 +50,20 @@ namespace ReadFile.Service
             return new DadosRetornoArquivoModel
             {
                 Vendas = vendas,
-                CaminhoSaida = caminhoArquivo,
                 Clientes = clientes,
                 Vendedores = vendedores,
-                NomeArquivoSaida = nomeDoArquivo
             };
         }
 
         private static void InserirItensDaVenda(VendaViewModel vendaTipada, Venda venda)
         {
             var itensDaVenda = vendaTipada.ItensVendas.Replace("[", "").Replace("]", "").Split(",");
+            CultureInfo cultures = new CultureInfo("en-US");
+
             foreach (var itemDaVenda in itensDaVenda)
             {
-                var item = new VendaItem() { };
-                var a = itemDaVenda.Split("-");
-                item.ItemId = int.Parse(a[0]);
-                item.ItemQuantity = int.Parse(a[1]);
-                item.ItemPrice = Convert.ToDecimal(a[2]);
+                var dadosDoItem = itemDaVenda.Split("-");
+                var item = new VendaItem(int.Parse(dadosDoItem[0]), int.Parse(dadosDoItem[1]), Convert.ToDecimal(dadosDoItem[2], cultures));
                 venda.Itens.Add(item);
             }
         }

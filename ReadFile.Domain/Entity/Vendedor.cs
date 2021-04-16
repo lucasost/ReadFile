@@ -2,16 +2,15 @@
 {
     public class Vendedor : Base
     {
-        public Vendedor(string type, string cpf, string name, decimal salary)
+        public Vendedor(string type, string cpf, string name, decimal salary) : base(type)
         {
-            Type = type;
             Cpf = cpf;
             Name = name;
             Salary = salary;
         }
 
-        public string Cpf { get; set; }
-        public string Name { get; set; }
-        public decimal Salary { get; set; }
+        public string Cpf { get; }
+        public string Name { get; }
+        public decimal Salary { get; }
     }
 }

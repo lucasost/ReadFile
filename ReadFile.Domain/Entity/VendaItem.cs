@@ -2,8 +2,15 @@
 {
     public class VendaItem
     {
-        public int ItemId { get; set; }
-        public int ItemQuantity { get; set; }
-        public decimal ItemPrice { get; set; }
+        public VendaItem(int itemId, int itemQuantity, decimal itemPrice)
+        {
+            ItemId = itemId;
+            ItemQuantity = itemQuantity;
+            ItemPrice = itemPrice;
+        }
+
+        public int ItemId { get; }
+        public int ItemQuantity { get; }
+        public decimal ItemPrice { get; }
     }
 }

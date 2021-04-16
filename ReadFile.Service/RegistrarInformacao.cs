@@ -11,9 +11,9 @@ namespace ReadFile.Service
             _registro = registro;
         }
 
-        public void RegistrarInfo(string mensagem)
+        public void RegistrarInfo(string mensagem, string path)
         {
-            _registro.RegistrarInfo($"{mensagem}");
+            _registro.RegistrarInfo($"{mensagem}", path);
         }
     }
 }

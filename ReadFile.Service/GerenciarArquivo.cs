@@ -10,7 +10,7 @@ namespace ReadFile.Service
         {
             if (Directory.Exists(path))
             {
-                Console.WriteLine($"Caminho {Directory.GetCreationTime(path)} já exite!");
+                Console.WriteLine($"Caminho {path} já exite!");
             }
             else
             {

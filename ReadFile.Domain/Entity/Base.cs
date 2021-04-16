@@ -2,6 +2,11 @@
 {
     public class Base
     {
-        public string Type { get; set; }
+        public Base(string type)
+        {
+            Type = type;
+        }
+        public string Type { get; }
+
     }
 }

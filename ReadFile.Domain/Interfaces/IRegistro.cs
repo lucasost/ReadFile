@@ -2,7 +2,7 @@
 {
     public interface IRegistro
     {
-        void RegistrarInfo(string mensagem);
+        void RegistrarInfo(string mensagem, string path);
 
     }
 }

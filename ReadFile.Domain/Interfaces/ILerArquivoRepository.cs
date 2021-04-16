@@ -4,6 +4,6 @@ namespace ReadFile.Domain.Interfaces
 {
     public interface ILerArquivoRepository
     {
-        DadosRetornoArquivoModel InterpretarArquivo(string caminhoArquivo, string nomeDoArquivo);
+        DadosRetornoArquivoModel InterpretarArquivo(string caminhoArquivo);
     }
 }

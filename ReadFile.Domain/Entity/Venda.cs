@@ -4,10 +4,17 @@ namespace ReadFile.Domain.Entity
 {
     public class Venda : Base
     {
-        public int SaleId { get; set; }
+        public Venda(string type, int saleId, string salesman) : base(type)
+        {
+            SaleId = saleId;
+            Itens = new List<VendaItem> ();
+            Salesman = salesman;
+        }
 
-        public List<VendaItem> Itens { get; set; }
+        public int SaleId { get; }
 
-        public string Salesman { get; set; }
+        public List<VendaItem> Itens { get; }
+
+        public string Salesman { get; }
     }
 }
