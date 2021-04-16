@@ -42,7 +42,7 @@ Os dados de venda possuem o identificador 003 e seguem o seguinte formato:
 
 Interpretações implementadas:
 -----
-O sistema ao ler o arquivo e posteriormente salvar em na pasta *data/out* exibirá as seguintes informações:
+O sistema ao ler o arquivo e posteriormente salvar em *data/out* exibirá as seguintes informações:
 
 - Quantidade de clientes no arquivo de entrada;
 - Quantidade de vendedores no arquivo de entrada;
